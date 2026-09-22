@@ -1,0 +1,4 @@
+
+*.pdf
+scripts/cache/
+scripts/temp_chunk.pdf

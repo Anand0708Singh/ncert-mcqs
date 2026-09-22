@@ -2,18 +2,21 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { CheckSquare, Square, Play, Settings } from 'lucide-react';
-import questionBank from '../data/question_bank.json';
 
 export default function ChapterSelect() {
   const navigate = useNavigate();
-  const { activeBookId, selectedChapters, toggleChapter, setTestSettings } = useStore();
+  const { activeBookId, selectedChapters, toggleChapter, setTestSettings, metadata } = useStore();
   
-  if (!activeBookId) {
+  if (!activeBookId || !metadata) {
     navigate('/');
     return null;
   }
   
-  const book = (questionBank as any)[activeBookId];
+  const book = metadata.books.find((b: any) => b.bookId === activeBookId);
+  if (!book) {
+    navigate('/');
+    return null;
+  }
 
   const handleStart = () => {
     if (selectedChapters.length === 0) return;
@@ -38,35 +41,31 @@ export default function ChapterSelect() {
           <h1 className="text-3xl font-bold text-slate-900">Select Chapters</h1>
           <p className="text-slate-500 mt-1">{book.bookTitle}</p>
         </div>
-        <button 
+        <button
           onClick={toggleAll}
-          className="text-sm font-medium text-indigo-600 bg-indigo-50 px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors"
+          className="text-sm font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 px-4 py-2 rounded-lg transition-colors"
         >
           {selectedChapters.length === book.chapters.length ? 'Deselect All' : 'Select All'}
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        {book.chapters.map((chapter: any, idx: number) => {
+        {book.chapters.map((chapter: any) => {
           const isSelected = selectedChapters.includes(chapter.chapterId);
           return (
-            <div 
+            <div
               key={chapter.chapterId}
               onClick={() => toggleChapter(chapter.chapterId)}
-              className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-start gap-4
-                ${isSelected ? 'border-indigo-500 bg-indigo-50/50' : 'border-slate-200 bg-white hover:border-indigo-300'}`}
+              className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-4 ${isSelected ? 'border-indigo-600 bg-indigo-50/50 shadow-sm' : 'border-slate-200 bg-white hover:border-indigo-300 hover:shadow-sm'}`}
             >
-              <div className={`mt-0.5 ${isSelected ? 'text-indigo-600' : 'text-slate-400'}`}>
-                {isSelected ? <CheckSquare className="w-6 h-6" /> : <Square className="w-6 h-6" />}
+              <div className="mt-1">
+                {isSelected ? <CheckSquare className="text-indigo-600" /> : <Square className="text-slate-300" />}
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Chapter {idx + 1}</p>
-                <h3 className={`text-lg font-bold ${isSelected ? 'text-indigo-900' : 'text-slate-800'}`}>
+                <h3 className={`font-bold ${isSelected ? 'text-indigo-900' : 'text-slate-700'}`}>
                   {chapter.chapterTitle}
                 </h3>
-                <p className="text-sm text-slate-500 mt-2">
-                  {chapter.questions.length} Questions
-                </p>
+                <p className="text-sm text-slate-500 mt-1">{chapter.questionCount} Questions</p>
               </div>
             </div>
           );

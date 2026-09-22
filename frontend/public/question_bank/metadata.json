@@ -1,0 +1,23 @@
+{
+  "version": "2026.1",
+  "lastUpdated": "2026-09-22",
+  "books": [
+    {
+      "bookId": "science10",
+      "bookTitle": "NCERT Class 10 Science",
+      "chapters": [
+        {
+          "chapterId": "ch01",
+          "chapterTitle": "Chemical Reactions and Equations",
+          "questionCount": 5
+        },
+        {
+          "chapterId": "ch02",
+          "chapterTitle": "Acids, Bases and Salts",
+          "questionCount": 5
+        }
+      ]
+    }
+  ],
+  "totalQuestions": 10
+}

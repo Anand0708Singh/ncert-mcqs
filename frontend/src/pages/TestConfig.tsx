@@ -1,27 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { Play, Settings2, Clock, CheckCircle2, GraduationCap } from 'lucide-react';
-import questionBank from '../data/question_bank.json';
 
 export default function TestConfig() {
   const navigate = useNavigate();
-  const { testSettings, setTestSettings, selectedChapters, activeBookId, startTest } = useStore();
+  const { testSettings, setTestSettings, selectedChapters, activeBookId, startTest, metadata, loadChapter, loadedChapters } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
   
-  if (!activeBookId || selectedChapters.length === 0) {
+  if (!activeBookId || selectedChapters.length === 0 || !metadata) {
     navigate('/chapters');
     return null;
   }
 
-  const book = (questionBank as any)[activeBookId];
-  let availableQuestions: any[] = [];
-  book.chapters.forEach((ch: any) => {
-    if (selectedChapters.includes(ch.chapterId)) {
-      availableQuestions = [...availableQuestions, ...ch.questions];
-    }
-  });
+  const book = metadata.books.find((b: any) => b.bookId === activeBookId);
+  if (!book) return null;
 
-  const handleStart = () => {
+  const totalSelectedQuestions = book.chapters
+    .filter((ch: any) => selectedChapters.includes(ch.chapterId))
+    .reduce((acc: number, ch: any) => acc + ch.questionCount, 0);
+
+  const handleStart = async () => {
+    setIsLoading(true);
+    
+    // Ensure all selected chapters are loaded
+    for (const chId of selectedChapters) {
+      await loadChapter(activeBookId, chId);
+    }
+    
+    // Aggregate loaded questions
+    let availableQuestions: any[] = [];
+    selectedChapters.forEach(chId => {
+      const cacheKey = `${activeBookId}_${chId}`;
+      if (loadedChapters[cacheKey]) {
+        availableQuestions = [...availableQuestions, ...loadedChapters[cacheKey]];
+      }
+    });
+
     // Filter questions based on difficulty if needed
     let pool = availableQuestions;
     if (testSettings.difficulty !== 'all') {
@@ -34,8 +49,10 @@ export default function TestConfig() {
     }
     
     // Slice count
-    const finalQuestions = pool.slice(0, testSettings.questionCount);
+    const finalQuestions = pool.slice(0, testSettings.questionCount === totalSelectedQuestions ? pool.length : testSettings.questionCount);
     
+    setIsLoading(false);
+
     if (finalQuestions.length === 0) {
       alert("No questions match your criteria.");
       return;
@@ -80,18 +97,20 @@ export default function TestConfig() {
         <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-bold text-slate-800">Number of Questions</h2>
-            <span className="text-sm text-slate-500">{availableQuestions.length} available</span>
+            <span className="text-sm text-slate-500">{totalSelectedQuestions} available</span>
           </div>
           <div className="flex flex-wrap gap-3">
-            {[10, 20, 30, 50, availableQuestions.length].map((num) => (
+            {[10, 20, 30, 50, totalSelectedQuestions].map((num) => (
+              num > 0 && num <= totalSelectedQuestions && (
               <button
                 key={num}
                 onClick={() => setTestSettings({ questionCount: num })}
                 className={`px-5 py-2.5 rounded-lg font-medium border-2 transition-colors
-                  ${testSettings.questionCount === num ? 'border-indigo-600 bg-indigo-600 text-white' : 'border-slate-200 text-slate-600 hover:border-indigo-300 hover:bg-indigo-50'}`}
+                  ${testSettings.questionCount === num || (num === totalSelectedQuestions && testSettings.questionCount > totalSelectedQuestions) ? 'border-indigo-600 bg-indigo-600 text-white' : 'border-slate-200 text-slate-600 hover:border-indigo-300 hover:bg-indigo-50'}`}
               >
-                {num === availableQuestions.length ? 'All' : num}
+                {num === totalSelectedQuestions ? 'All' : num}
               </button>
+              )
             ))}
           </div>
         </section>
@@ -129,8 +148,13 @@ export default function TestConfig() {
       </div>
 
       <div className="mt-8">
-        <button onClick={handleStart} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 text-lg shadow-md transition-colors">
-          <Play className="w-6 h-6 fill-current" /> Start {testSettings.mode === 'practice' ? 'Practice' : 'Mock Test'}
+        <button onClick={handleStart} disabled={isLoading} className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 text-lg shadow-md transition-colors">
+          {isLoading ? (
+             <div className="animate-spin w-6 h-6 border-2 border-white border-t-transparent rounded-full"></div>
+          ) : (
+             <Play className="w-6 h-6 fill-current" />
+          )}
+          {isLoading ? 'Loading Chapters...' : `Start ${testSettings.mode === 'practice' ? 'Practice' : 'Mock Test'}`}
         </button>
       </div>
     </div>

@@ -1,12 +1,29 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { get, set, del } from 'idb-keyval';
 import type { TestResult, TestSettings, Attempt, Question } from '../types';
+
+const idbStorage = {
+  getItem: async (name: string): Promise<string | null> => {
+    return (await get(name)) || null;
+  },
+  setItem: async (name: string, value: string): Promise<void> => {
+    await set(name, value);
+  },
+  removeItem: async (name: string): Promise<void> => {
+    await del(name);
+  },
+};
 
 interface AppState {
   // User Data
   testHistory: TestResult[];
   bookmarkedQuestions: string[];
   
+  // Data caching
+  metadata: any | null;
+  loadedChapters: Record<string, Question[]>;
+
   // Current Test Configuration
   activeBookId: string | null;
   selectedChapters: string[];
@@ -21,6 +38,8 @@ interface AppState {
   timeRemaining: number;
   
   // Actions
+  loadMetadata: () => Promise<void>;
+  loadChapter: (bookId: string, chapterId: string) => Promise<void>;
   addTestResult: (result: TestResult) => void;
   toggleBookmark: (questionId: string) => void;
   setActiveBook: (bookId: string) => void;
@@ -47,9 +66,11 @@ const initialSettings: TestSettings = {
 
 export const useStore = create<AppState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       testHistory: [],
       bookmarkedQuestions: [],
+      metadata: null,
+      loadedChapters: {},
       activeBookId: 'science10',
       selectedChapters: [],
       testSettings: initialSettings,
@@ -59,6 +80,38 @@ export const useStore = create<AppState>()(
       isTestActive: false,
       isTestFinished: false,
       timeRemaining: 0,
+
+      loadMetadata: async () => {
+        if (get().metadata) return;
+        try {
+          const res = await fetch(`${import.meta.env.BASE_URL}question_bank/metadata.json`);
+          if (res.ok) {
+            const data = await res.json();
+            set({ metadata: data });
+          }
+        } catch (e) {
+          console.error("Failed to load metadata", e);
+        }
+      },
+
+      loadChapter: async (bookId: string, chapterId: string) => {
+        const cacheKey = `${bookId}_${chapterId}`;
+        if (get().loadedChapters[cacheKey]) return;
+        try {
+          const res = await fetch(`${import.meta.env.BASE_URL}question_bank/${cacheKey}.json`);
+          if (res.ok) {
+            const data = await res.json();
+            set((state) => ({
+              loadedChapters: {
+                ...state.loadedChapters,
+                [cacheKey]: data.questions
+              }
+            }));
+          }
+        } catch (e) {
+          console.error("Failed to load chapter", e);
+        }
+      },
 
       addTestResult: (result) => set((state) => ({ testHistory: [...state.testHistory, result] })),
       
@@ -122,6 +175,7 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'ncert-mcq-storage',
+      storage: createJSONStorage(() => idbStorage),
       partialize: (state) => ({
         testHistory: state.testHistory,
         bookmarkedQuestions: state.bookmarkedQuestions,
