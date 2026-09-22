@@ -1,0 +1,210 @@
+{
+  "science10": {
+    "bookId": "science10",
+    "bookTitle": "NCERT Class 10 Science",
+    "chapters": [
+      {
+        "chapterId": "ch01",
+        "chapterTitle": "Chemical Reactions and Equations",
+        "questions": [
+          {
+            "id": "SCI10-CH01-Q0001",
+            "bookId": "science10",
+            "chapterId": "ch01",
+            "chapterTitle": "Chemical Reactions and Equations",
+            "question": "Which of the following is an example of a physical change rather than a chemical change?",
+            "options": [
+              { "id": "A", "text": "Burning of magnesium ribbon" },
+              { "id": "B", "text": "Rusting of iron" },
+              { "id": "C", "text": "Melting of ice" },
+              { "id": "D", "text": "Digestion of food" }
+            ],
+            "correctAnswer": "C",
+            "explanation": "Melting of ice is a physical change because water changes its state from solid to liquid without forming any new chemical substance. The others involve chemical reactions.",
+            "difficulty": "easy",
+            "type": "conceptual",
+            "source": { "section": "1.1 Physical and Chemical Changes", "page": 1 },
+            "tags": ["physical change", "basics"]
+          },
+          {
+            "id": "SCI10-CH01-Q0002",
+            "bookId": "science10",
+            "chapterId": "ch01",
+            "chapterTitle": "Chemical Reactions and Equations",
+            "question": "What is the chemical name of the white powder that is formed when a magnesium ribbon burns in air?",
+            "options": [
+              { "id": "A", "text": "Magnesium hydroxide" },
+              { "id": "B", "text": "Magnesium oxide" },
+              { "id": "C", "text": "Magnesium carbonate" },
+              { "id": "D", "text": "Magnesium dioxide" }
+            ],
+            "correctAnswer": "B",
+            "explanation": "When magnesium burns in oxygen, it forms magnesium oxide (MgO), which is a white powder.",
+            "difficulty": "medium",
+            "type": "factual",
+            "source": { "section": "1.1 Chemical Equations", "page": 2 },
+            "tags": ["combustion", "magnesium"]
+          },
+          {
+            "id": "SCI10-CH01-Q0003",
+            "bookId": "science10",
+            "chapterId": "ch01",
+            "chapterTitle": "Chemical Reactions and Equations",
+            "question": "Consider the equation: Fe2O3 + 2Al -> Al2O3 + 2Fe. What type of reaction is this?",
+            "options": [
+              { "id": "A", "text": "Combination reaction" },
+              { "id": "B", "text": "Double displacement reaction" },
+              { "id": "C", "text": "Decomposition reaction" },
+              { "id": "D", "text": "Displacement reaction" }
+            ],
+            "correctAnswer": "D",
+            "explanation": "Aluminum displaces iron from iron oxide because aluminum is more reactive than iron. This is a classic single displacement reaction.",
+            "difficulty": "medium",
+            "type": "application",
+            "source": { "section": "1.2 Types of Chemical Reactions", "page": 10 },
+            "tags": ["displacement", "reactivity"]
+          },
+          {
+            "id": "SCI10-CH01-Q0004",
+            "bookId": "science10",
+            "chapterId": "ch01",
+            "chapterTitle": "Chemical Reactions and Equations",
+            "question": "Which of the following gases is used for the storage of fat and oil containing foods for a long time?",
+            "options": [
+              { "id": "A", "text": "Carbon dioxide" },
+              { "id": "B", "text": "Nitrogen" },
+              { "id": "C", "text": "Oxygen" },
+              { "id": "D", "text": "Hydrogen" }
+            ],
+            "correctAnswer": "B",
+            "explanation": "Nitrogen is an inert gas used to flush bags of chips and other fatty foods to prevent oxidation (rancidity).",
+            "difficulty": "easy",
+            "type": "factual",
+            "source": { "section": "1.3 Effects of Oxidation Reactions", "page": 13 },
+            "tags": ["rancidity", "prevention"]
+          },
+          {
+            "id": "SCI10-CH01-Q0005",
+            "bookId": "science10",
+            "chapterId": "ch01",
+            "chapterTitle": "Chemical Reactions and Equations",
+            "question": "Assertion (A): Decomposition of vegetable matter into compost is an example of an exothermic reaction. \nReason (R): Exothermic reactions are those in which heat is absorbed.",
+            "options": [
+              { "id": "A", "text": "Both A and R are true and R is the correct explanation of A." },
+              { "id": "B", "text": "Both A and R are true but R is not the correct explanation of A." },
+              { "id": "C", "text": "A is true but R is false." },
+              { "id": "D", "text": "A is false but R is true." }
+            ],
+            "correctAnswer": "C",
+            "explanation": "The decomposition of vegetable matter into compost releases heat, making it an exothermic reaction. Therefore, Assertion is true. However, the Reason is false because exothermic reactions release heat, they do not absorb it.",
+            "difficulty": "hard",
+            "type": "assertion-reason",
+            "source": { "section": "1.2 Types of Chemical Reactions", "page": 9 },
+            "tags": ["exothermic", "decomposition"]
+          }
+        ]
+      },
+      {
+        "chapterId": "ch02",
+        "chapterTitle": "Acids, Bases and Salts",
+        "questions": [
+          {
+            "id": "SCI10-CH02-Q0001",
+            "bookId": "science10",
+            "chapterId": "ch02",
+            "chapterTitle": "Acids, Bases and Salts",
+            "question": "What happens when a solution of an acid is mixed with a solution of a base in a test tube?",
+            "options": [
+              { "id": "A", "text": "The temperature of the solution decreases" },
+              { "id": "B", "text": "The temperature of the solution remains the same" },
+              { "id": "C", "text": "Salt formation takes place and the temperature increases" },
+              { "id": "D", "text": "No reaction occurs" }
+            ],
+            "correctAnswer": "C",
+            "explanation": "The reaction between an acid and a base is a neutralization reaction which is exothermic (releases heat) and forms salt and water.",
+            "difficulty": "medium",
+            "type": "conceptual",
+            "source": { "section": "2.2 What do all Acids and Bases have in common?", "page": 21 },
+            "tags": ["neutralization", "exothermic"]
+          },
+          {
+            "id": "SCI10-CH02-Q0002",
+            "bookId": "science10",
+            "chapterId": "ch02",
+            "chapterTitle": "Acids, Bases and Salts",
+            "question": "Which of the following salts does not contain water of crystallization?",
+            "options": [
+              { "id": "A", "text": "Blue vitriol" },
+              { "id": "B", "text": "Baking soda" },
+              { "id": "C", "text": "Washing soda" },
+              { "id": "D", "text": "Gypsum" }
+            ],
+            "correctAnswer": "B",
+            "explanation": "Baking soda is sodium hydrogen carbonate (NaHCO3) and does not contain water of crystallization. Blue vitriol (CuSO4.5H2O), washing soda (Na2CO3.10H2O), and gypsum (CaSO4.2H2O) all contain water of crystallization.",
+            "difficulty": "hard",
+            "type": "factual",
+            "source": { "section": "2.4 Are the Crystals of Salts really Dry?", "page": 32 },
+            "tags": ["salts", "water of crystallization"]
+          },
+          {
+            "id": "SCI10-CH02-Q0003",
+            "bookId": "science10",
+            "chapterId": "ch02",
+            "chapterTitle": "Acids, Bases and Salts",
+            "question": "An aqueous solution turns red litmus solution blue. Excess addition of which of the following solution would reverse the change?",
+            "options": [
+              { "id": "A", "text": "Baking powder" },
+              { "id": "B", "text": "Lime" },
+              { "id": "C", "text": "Ammonium hydroxide solution" },
+              { "id": "D", "text": "Hydrochloric acid" }
+            ],
+            "correctAnswer": "D",
+            "explanation": "Turning red litmus blue indicates the original solution is basic. To reverse the change (turn it back to red), an acid must be added in excess. Hydrochloric acid is the only acid listed.",
+            "difficulty": "medium",
+            "type": "application",
+            "source": { "section": "2.1 Understanding the Chemical Properties of Acids and Bases", "page": 18 },
+            "tags": ["indicators", "pH"]
+          },
+          {
+            "id": "SCI10-CH02-Q0004",
+            "bookId": "science10",
+            "chapterId": "ch02",
+            "chapterTitle": "Acids, Bases and Salts",
+            "question": "What is the pH range of our body to work normally?",
+            "options": [
+              { "id": "A", "text": "7.0 to 7.8" },
+              { "id": "B", "text": "5.5 to 6.5" },
+              { "id": "C", "text": "8.0 to 9.0" },
+              { "id": "D", "text": "6.0 to 7.0" }
+            ],
+            "correctAnswer": "A",
+            "explanation": "Our body works within the pH range of 7.0 to 7.8. Living organisms can survive only in a narrow range of pH change.",
+            "difficulty": "easy",
+            "type": "factual",
+            "source": { "section": "2.3 Importance of pH in Everyday Life", "page": 26 },
+            "tags": ["pH", "biology"]
+          },
+          {
+            "id": "SCI10-CH02-Q0005",
+            "bookId": "science10",
+            "chapterId": "ch02",
+            "chapterTitle": "Acids, Bases and Salts",
+            "question": "Tooth decay starts when the pH of the mouth is lower than:",
+            "options": [
+              { "id": "A", "text": "5.5" },
+              { "id": "B", "text": "6.5" },
+              { "id": "C", "text": "7.0" },
+              { "id": "D", "text": "7.5" }
+            ],
+            "correctAnswer": "A",
+            "explanation": "Tooth decay starts when the pH of the mouth is lower than 5.5, as the acid produced by bacteria begins to corrode the tooth enamel.",
+            "difficulty": "easy",
+            "type": "factual",
+            "source": { "section": "2.3 Importance of pH in Everyday Life", "page": 27 },
+            "tags": ["pH", "health"]
+          }
+        ]
+      }
+    ]
+  }
+}
